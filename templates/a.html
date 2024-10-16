@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block style %}
+<style type="text/css">
+    .tm-bg-brown {
+        background-color: #544639;  /* Brown color background */
+    }
+
+    .text-white {
+        color: rgb(0, 0, 0);
+    }
+
+    .rounded-md {
+        border-radius: 8px;
+    }
+
+    .py-2 {
+        padding-top: 0.1rem;
+        padding-bottom: 0.1rem;
+    }
+
+    .px-3 {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .tm-text-yellow {
+        color: #FC6;  /* Yellow color matching the menu */
+    }
+
+    .tm-item-container {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+        padding: 20px;
+        background-color: #544639;
+        border-radius: 12px;
+    }
+
+    input[type="text"], input[type="password"], input[type="email"] {
+        font-size: 1rem;
+        line-height: 1.5;
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #eee;
+        transition: all 0.3s ease-in-out;
+    }
+
+    input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+        outline: none;
+        border-color: #FC6;  /* Focus border color to match yellow */
+        box-shadow: 0 0 5px rgba(252, 198, 102, 0.8);
+    }
+
+    label {
+        font-weight: bold;
+        color: #FC6; /* Matches the yellow color for labels */
+        margin-bottom: 0.5rem;
+    }
+
+    .btn-outline-primary {
+        border: 2px solid #FC6; /* Border color for button */
+        color: #FC6;
+        background-color: transparent;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 8px;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #FC6;
+        color: #544639; /* Button hover state */
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #f5c6cb;
+    }
+
+    .eye-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #888;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+
+</style>
+{% endblock %}
+{% block index %}
+{% endblock %}
+{% block content %}
+<div id="menu" class="parallax-window" data-parallax="scroll" data-image-src="img/antique-cafe-bg-02.jpg">
+    <div class="container mx-auto tm-container py-24 sm:py-48">
+        <div class="text-center mb-16">
+            <h2 class="bg-white tm-text-brown py-6 px-12 text-4xl font-medium inline-block rounded-md">Register</h2>
+        </div>            
+        <div class="flex flex-col lg:flex-row justify-around items-center">
+            <div class="flex-1 m-5 rounded-xl px-4 py-6 sm:px-8 sm:py-10 tm-bg-brown tm-item-container">
+                <p class="text-muted mb-5">Please use the following form to register.</p>
+                            <form method="post" action="">
+                                {% csrf_token %}
+                                <div class="form-group mb-4">
+                                    {{ user_form.username.label_tag }}
+                                    {{ user_form.username }}
+                                </div>
+                                <div class="form-group mb-4 position-relative password-focused">
+                                    {{ user_form.password.label_tag }}
+                                    {{ user_form.password }}
+                                    <i class="eye-icon fa fa-eye" onclick="togglePasswordVisibility('id_password')"></i>
+                                </div>
+                                <div class="form-group mb-4 position-relative password-focused">
+                                    {{ user_form.password2.label_tag }}
+                                    {{ user_form.password2 }}
+                                    <i class="eye-icon fa fa-eye" onclick="togglePasswordVisibility('id_password2')"></i>
+                                </div>
+                                <button type="submit" class="btn btn-outline-primary btn-lg px-5">Create Account</button>
+                            </form><br>
+                            <p class="mb-0 text-muted" style="text-align: center;">
+                                Don't have an account? <a href="{% url 'register' %}" class="fw-bold">Sign Up</a> or 
+                                <a href="/" class="fw-bold">Go to Home</a>
+                            </p>
+            </div>
+        </div>
+    </div>        
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    // Function to toggle password visibility
+    function togglePasswordVisibility(inputId) {
+        var passwordInput = document.getElementById(inputId);
+        var eyeIcon = document.querySelector(`[onclick="togglePasswordVisibility('${inputId}')"]`);
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
+    }
+
+    // Add focus and input event listeners to toggle eye icon visibility
+    document.addEventListener('DOMContentLoaded', function() {
+        var passwordFields = document.querySelectorAll('input[type="password"]');
+        var eyeIcons = document.querySelectorAll('.eye-icon');
+
+        passwordFields.forEach(function(passwordField, index) {
+            passwordField.addEventListener('focus', function() {
+                eyeIcons[index].style.display = 'block';
+            });
+
+            passwordField.addEventListener('blur', function() {
+                if (passwordField.type === 'password') {
+                    eyeIcons[index].style.display = 'none';
+                }
+            });
+
+            passwordField.addEventListener('input', function() {
+                if (passwordField.value.trim() !== '') {
+                    eyeIcons[index].style.display = 'block';
+                } else {
+                    eyeIcons[index].style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

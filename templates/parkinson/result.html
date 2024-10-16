@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}
+Parkinson's Disease Prediction Result
+{% endblock %}
+
+{% block style %}
+<style>
+    /* General Styles */
+
+    .pd-card {
+        background-color: rgb(156, 6, 6);
+        border-radius: 8px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Increased shadow for 3D effect */
+        transform: translateZ(0);
+        transition: transform 0.3s ease-in-out; /* Smooth transition for hover effect */
+        padding: 30px;
+        width: 600px;
+        margin: 20px auto;
+        text-align: center; /* Center all text within the card */
+    }
+
+    .pd-card:hover {
+        transform: translateY(-10px) scale(1.05); /* Slight lift and zoom for 3D effect */
+    }
+
+    .pd-title, .pd-subtitle {
+        color: blue;
+        margin-bottom: 20px;
+        text-align: center; /* Ensure all headings are centered */
+    }
+
+    .pd-text, .pd-list, .pd-table {
+        font-size: 18px;
+        margin: 20px auto;
+        text-align: center;
+    }
+
+    .pd-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .pd-table, .pd-th, .pd-td {
+        border: 1px solid #ddd;
+    }
+
+    .pd-th, .pd-td {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .pd-th {
+        background-color: #f2f2f2;
+    }
+
+    .pd-metric-title {
+        font-weight: bold;
+    }
+
+    /* Add some animation for icons */
+    .pd-icon {
+        transition: transform 0.3s;
+    }
+
+    .pd-icon:hover {
+        transform: scale(1.2); /* Icon enlarges slightly when hovered */
+    }
+
+    /* Add subtle glow effect on hover */
+    .pd-icon-glow:hover {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+</style>
+
+
+
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<center>
+<div class="pd-card">
+    <h1 class="pd-title">Parkinson's Disease Prediction Result</h1>
+    <p class="pd-text"><strong>Prediction:</strong> {{ result.0 }} <i class="fa-solid fa-diagnoses pd-icon"></i></p> 
+    <!-- Display the percentage of how much the user is suffering -->
+    <p class="pd-text"><strong>Percentage of Parkinson's Prediction:</strong> {{ result.1 }}% <i class="fa-solid fa-percentage pd-icon"></i></p>
+    <!-- Display the stage of Parkinson's -->
+    <p class="pd-text"><strong>Stage of Parkinson's:</strong> {{ result.2 }} <i class="fa-solid fa-chart-line pd-icon"></i></p>
+
+
+    <h2 class="pd-subtitle">Suggestions:</h2>
+    <table class="pd-table">
+        <tr>
+            <th class="pd-th">Suggestion <i class="fa-solid fa-lightbulb pd-icon"></i></th>
+        </tr>
+        {% for suggestion in suggestions %}
+        <tr>
+            <td class="pd-td">{{ suggestion }} <i class="fa-solid fa-thumbs-up pd-icon pd-icon-glow"></i></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2 class="pd-subtitle">Recommended Exercises:</h2>
+    <table class="pd-table">
+        <tr>
+            <th class="pd-th">Exercise <i class="fa-solid fa-dumbbell pd-icon"></i></th>
+        </tr>
+        {% for exercise in exercises %}
+        <tr>
+            <td class="pd-td">{{ exercise }} <i class="fa-solid fa-running pd-icon pd-icon-glow"></i></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2 class="pd-subtitle">Model Performance Metrics</h2>
+    <table class="pd-table">
+        <tr>
+            <th class="pd-th">Metric <i class="fa-solid fa-chart-bar pd-icon"></i></th>
+            <th class="pd-th">Value</th>
+        </tr>
+        <tr>
+            <td class="pd-metric-title">Models Trained</td>
+            <td class="pd-td">{{ metrics.model }} and Adam Optimizer</td>
+        </tr>
+        <tr>
+            <td class="pd-metric-title">Model Used</td>
+            <td class="pd-td">{{ metrics.model }}</td>
+        </tr>
+        <tr>
+            <td class="pd-metric-title">Accuracy <i class="fa-solid fa-bullseye pd-icon"></i></td>
+            <td class="pd-td">{{ metrics.accuracy }}</td>
+        </tr>
+        <tr>
+            <td class="pd-metric-title">F1 Score <i class="fa-solid fa-chart-pie pd-icon"></i></td>
+            <td class="pd-td">{{ metrics.f1_score }}</td>
+        </tr>
+        <tr>
+            <td class="pd-metric-title">Precision</td>
+            <td class="pd-td">{{ metrics.precision }}</td>
+        </tr>
+        <tr>
+            <td class="pd-metric-title">Recall</td>
+            <td class="pd-td">{{ metrics.recall }}</td>
+        </tr>
+        <tr>
+            <td class="pd-metric-title">MSE (Mean Squared Error)</td>
+            <td class="pd-td">{{ metrics.mse }}</td>
+        </tr>
+        <tr>
+            <td class="pd-metric-title">MAE (Mean Absolute Error)</td>
+            <td class="pd-td">{{ metrics.mae }}</td>
+        </tr>
+        <tr>
+            <td class="pd-metric-title">Log Loss</td>
+            <td class="pd-td">{{ metrics.log_loss }}</td>
+        </tr>
+    </table>
+
+    <div class="pd-card-footer">
+        <p class="pd-text"><strong>Thank you for using our prediction tool!</strong> <i class="fa-solid fa-heart pd-icon"></i></p>
+    </div>
+</div>
+</center>
+{% endblock %}

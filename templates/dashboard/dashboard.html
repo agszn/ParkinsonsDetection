@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block style %}
+<style>
+    .card-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+        gap: 20px;
+    }
+    .card {
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        padding: 20px;
+        width: 200px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .card h2 {
+        font-size: 36px;
+        margin: 10px 0;
+    }
+    .card p {
+        font-size: 14px;
+        color: #555;
+    }
+    .card i {
+        font-size: 40px;
+        color: #4CAF50;
+        margin-bottom: 10px;
+    }
+    .fade-in {
+        opacity: 0;
+        animation: fadeIn 1s forwards;
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+</style>
+{% endblock %}
+{% load static %}
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Spiral Model Performance Metrics</h1>
+    <div class="card-container">
+        <div class="card fade-in">
+            <i class="fas fa-chart-line"></i>
+            <h2>{{ spiral_accuracy|floatformat:2 }}</h2>
+            <p>Accuracy (Spiral)</p>
+        </div>
+        <div class="card fade-in">
+            <i class="fas fa-balance-scale"></i>
+            <h2>{{ spiral_f1_score|floatformat:2 }}</h2>
+            <p>F1 Score (Spiral)</p>
+        </div>
+        <div class="card fade-in">
+            <i class="fas fa-sync-alt"></i>
+            <h2>{{ spiral_recall|floatformat:2 }}</h2>
+            <p>Recall (Spiral)</p>
+        </div>
+        <div class="card fade-in">
+            <i class="fas fa-check"></i>
+            <h2>{{ spiral_precision|floatformat:2 }}</h2>
+            <p>Precision (Spiral)</p>
+        </div>
+        <div class="card fade-in">
+            <i class="fas fa-times-circle"></i>
+            <h2>{{ spiral_loss|floatformat:2 }}</h2>
+            <p>Loss (Spiral)</p>
+        </div>
+    </div>
+
+    <h1>Wave Model Performance Metrics</h1>
+    <div class="card-container">
+        <div class="card fade-in">
+            <i class="fas fa-chart-line"></i>
+            <h2>{{ wave_accuracy|floatformat:2 }}</h2>
+            <p>Accuracy (Wave)</p>
+        </div>
+        <div class="card fade-in">
+            <i class="fas fa-balance-scale"></i>
+            <h2>{{ wave_f1_score|floatformat:2 }}</h2>
+            <p>F1 Score (Wave)</p>
+        </div>
+        <div class="card fade-in">
+            <i class="fas fa-sync-alt"></i>
+            <h2>{{ wave_recall|floatformat:2 }}</h2>
+            <p>Recall (Wave)</p>
+        </div>
+        <div class="card fade-in">
+            <i class="fas fa-check"></i>
+            <h2>{{ wave_precision|floatformat:2 }}</h2>
+            <p>Precision (Wave)</p>
+        </div>
+        <div class="card fade-in">
+            <i class="fas fa-times-circle"></i>
+            <h2>{{ wave_loss|floatformat:2 }}</h2>
+            <p>Loss (Wave)</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block script %}
+{% endblock %}

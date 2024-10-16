@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block style %}
+<style>
+    /* Add your CSS styles here */
+    h1 {
+        color: blue;
+    }
+    form {
+        margin-top: 20px;
+    }
+    input[type="file"] {
+        margin-right: 10px;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: green;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+</style>
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<div style="text-align: center;">
+    <h1>Parkinson's Prediction</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="image">Upload a spiral or wave image:</label>
+        <input type="file" name="image" required><br><br>
+
+        <label for="model_choice">Choose Model:</label>
+        <select name="model_choice" required>
+            <option value="spiral">Spiral</option>
+            <option value="wave">Wave</option>
+        </select><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+{% endblock %}
